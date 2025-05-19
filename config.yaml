@@ -1,0 +1,55 @@
+# config.yaml
+environment:
+  # Task generation settings
+  task_types:
+    - "deduction"
+    - "abduction"
+    - "induction"
+  examples_per_task: 3
+  
+  # Code execution settings
+  code_executor_timeout: 5
+  
+  # Reward weights
+  diversity_weight: 0.3
+  difficulty_weight: 0.7
+  
+  # Buffer settings
+  max_task_buffer_size: 1000
+  
+  # Environment settings
+  proposer_probability: 0.5
+
+training:
+  # Model settings
+  model_name: "meta-llama/Llama-2-7b-hf"
+  use_peft: true
+  
+  # PEFT settings (if use_peft is true)
+  peft_config:
+    r: 16
+    lora_alpha: 32
+    lora_dropout: 0.05
+    target_modules:
+      - "q_proj"
+      - "v_proj"
+      - "k_proj"
+      - "o_proj"
+      - "gate_proj"
+      - "up_proj"
+      - "down_proj"
+  
+  # Training settings
+  learning_rate: 1.0e-5
+  batch_size: 16
+  gradient_accumulation_steps: 1
+  num_steps: 10000
+  checkpoint_dir: "./checkpoints"
+  
+  # Logging settings
+  log_interval: 10
+  save_interval: 100
+  evaluation_interval: 100
+  use_wandb: true
+  wandb_project: "absolute_zero_atropos"
+  wandb_entity: null
